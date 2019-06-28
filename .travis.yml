@@ -21,6 +21,8 @@ before_install:
   - eval "$(ssh-agent -s)"
   - chmod 600 ./.deploy_key
   - ssh-add ./.deploy_key
+  - ssh-keygen -R github.com
+  - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 install:
   - pip3 install ansible
