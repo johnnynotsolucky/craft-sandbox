@@ -13,10 +13,9 @@ before_install:
 		-in .deploy_key.enc -out ./.deploy_key -d
 	- ssh-add ./.deploy-key
   - sudo apt-get update -qq
-  - sudo apt-get install python3 -y
   - sudo apt-get install curl -y
   - sudo apt-get install jq -y
-
+  - sudo apt-get install python3 -y
 
 install:
   - pip install ansible
