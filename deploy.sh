@@ -6,6 +6,6 @@ EOF
 
 ansible-playbook --private-key .deploy_key \
   -u website \
-  -i inventory \
-  --vault-password-file ./.ansible-vault-password \
-  deploy.yml
+  -i infrastructure/ansible/inventories/staging \
+  --vault-password-file ./.ansible_vault_password \
+  infrastructure/ansible/deploy.yml

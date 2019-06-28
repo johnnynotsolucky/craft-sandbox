@@ -15,10 +15,10 @@
     #       - "--exclude=.env"
 
     - name: Clone website from repo
-			git:
-				repo: git@github.com:johnnynotsolucky/craft-sandbox.git
-				dest: "/var/www/{{ server_name }}"
-				force: yes
+      git:
+        repo: git@github.com:johnnynotsolucky/craft-sandbox.git
+        dest: "/var/www/{{ server_name }}"
+        force: yes
 
     - name: Set app owner/group
       become: yes
@@ -96,7 +96,7 @@
         --email \"{{ craft_admin_email }}\"
         --interactive 0
         --color 0
-			when: craft_install_craft_on_deploy|bool
+      when: craft_install_craft_on_deploy|bool
 
     - name: Migrate database
       command: "/var/www/{{ server_name }}/craft migrate/all"
