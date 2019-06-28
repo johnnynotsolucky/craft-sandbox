@@ -92,10 +92,10 @@
     - name: Install Craft
       command: >
         /var/www/{{ server_name }}/craft install/craft
-        --username \"{{ craft_default_username }}\"
-        --password \"{{ craft_default_password }}\"
-        --site-name \"{{ craft_site_name }}\"
-        --email \"{{ craft_admin_email }}\"
+        --username "{{ craft_default_username }}"
+        --password "{{ craft_default_password }}"
+        --site-name "{{ craft_site_name }}"
+        --email "{{ craft_admin_email }}"
         --interactive 0
         --color 0
       when: craft_install_craft_on_deploy|bool
