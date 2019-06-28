@@ -1,5 +1,0 @@
-[defaults]
-host_key_checking = False
-remote_user = my-remote-user
-private_key_file =  /home/someone/.ssh/id_rsa
-
