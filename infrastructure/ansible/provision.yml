@@ -1,0 +1,27 @@
+---
+- hosts: database
+  become: yes
+  roles:
+    - role: prep
+    - role: geerlingguy.mysql
+    # TODO Add ufw shit for db
+
+- hosts: webserver
+  become: yes
+  roles:
+    - role: prep
+    - role: benjamin-smith.ansible-ondrej-php-repo
+    - role: geerlingguy.php
+    - role: composer
+      # If certbot needs to provision a new certificate, this role will fail if a server
+      # already has nginx installed because the config is not telling it to stop the
+      # `nginx` service
+    - role: geerlingguy.certbot
+    - role: ansible-role-nginx-php-fpm
+    - role: ufw
+
+- hosts: cache
+  become: yes
+  roles:
+    - role: geerlingguy.redis
+    # TODO Add ufw shit for redis server

@@ -1,0 +1,20 @@
+---
+mysql_root_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36653936376230653061636538306535386361356532303330363136626462646366656463383036
+          6535333165343135356664613931393638653532356136340a346232353932636662626563636430
+          37643166613430326665396438653461343664353337393365343437303733383532303935633436
+          3739323362383635340a373935623062363730396231303338336136363166356665643565616265
+          6364
+mysql_databases:
+  - name: "{{ mysql_database_name }}"
+    encoding: latin1
+    collation: latin1_general_ci
+mysql_users:
+  - name: website
+    host: "%"
+    password: "{{ mysql_website_user_password }}"
+    priv: "sandbox.*:ALL"
+mysql_packages:
+  - mariadb-client
+  - mariadb-server

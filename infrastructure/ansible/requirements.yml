@@ -1,0 +1,24 @@
+---
+- name: ansible-role-nginx-php-fpm
+  src: https://github.com/johnnynotsolucky/ansible-role-nginx-php-fpm
+  version: master
+
+- src: geerlingguy.php
+  version: 3.7.0
+
+- name: benjamin-smith.ansible-ondrej-php-repo
+  src: https://github.com/benjamin-smith/ansible-ondrej-php-repo
+  version: master
+
+- src: geerlingguy.redis
+  version: 1.6.0
+
+- src: geerlingguy.certbot
+  version: 3.0.2
+
+- src: geerlingguy.mysql
+  version: 2.9.4
+
+- src: nickhammond.logrotate
+  version: master
+

@@ -1,0 +1,73 @@
+---
+craft_default_username: craftadmin
+craft_default_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32356261323061386661316561343763613836653137613232363864663532303965376435306437
+          6239353732306432316139316635313565316138353138620a306136613739626631393836616230
+          63653437356631643534343166643930643134373364303562343030333364383063356639346663
+          3035663465326536620a643665393237396666653462303761613939376131663137666633323961
+          3066
+craft_install_craft_on_deploy: true
+craft_migrate_on_deploy: true
+craft_sync_project_config_on_deploy: false
+craft_site_name: Sandbox
+craft_admin_email: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          62653061626337343835323364663863653538616462303431626339383238393962643161336636
+          3563653362633337353836346638323537396135396230630a313437623835663330393137336630
+          34376666646165636535326330326330386361653734626162373565366364663566643363343261
+          6564386434316564610a316333313866656364313231313864396630346338333038663339353136
+          39323234376530373032653065386565616366356264636665653337373335666639
+
+
+nginx_use_ppa: true
+nginx_ssl_certificate_path: "/etc/letsencrypt/live/{{ server_name }}/fullchain.pem"
+nginx_ssl_certificate_key_path: "/etc/letsencrypt/live/{{ server_name }}/privkey.pem"
+# nginx_ssl_trusted_certificate_path: "/etc/letsencrypt/live/{{ server_name }}/chain.pem"
+
+php_enable_php_fpm: true
+php_fpm_listen: "/var/run/php/php7.3-fpm.sock"
+php_fpm_daemon: php7.3-fpm
+php_default_version_debian: 7.3
+php_enable_webserver: false
+php_packages:
+  - php7.3-common
+  - php7.3-cli
+  - php7.3-dev
+  - php7.3-fpm
+  - libpcre3-dev
+  - php7.3-gd
+  - php7.3-curl
+  - php7.3-imap
+  - php7.3-json
+  - php7.3-opcache
+  - php7.3-xml
+  - php7.3-mbstring
+  - php-apcu
+  - php7.3-mysql
+  - php7.3-pgsql
+  - php7.3-imagick
+  - php7.3-recode
+  - php7.3-tidy
+  - php7.3-xmlrpc
+  - php7.3-zip
+  - php7.3-intl
+  - php7.3-redis
+
+certbot_admin_email: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31626239313162326562633561666465373932393365356238383763653233363035626534303663
+          3231623234663535356334613034303033653131353363360a643733396639383162663235383535
+          34356638376536323464363738653366353834643035366465373463383439386365623164616130
+          6139333734386135380a313033336332663034353335616236613832653534393935616130396432
+          64326463353031383464613264353965663635396137616562383439616136643935
+certbot_create_if_missing: true
+certbot_certs:
+  - domains:
+      - "{{ server_name }}"
+certbot_create_standalone_stop_services: []
+certbot_auto_renew: true
+certbot_auto_renew_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+certbot_auto_renew_hour: 3
+certbot_auto_renew_minute: 30
+certbot_auto_renew_options: "--quiet --no-self-upgrade"

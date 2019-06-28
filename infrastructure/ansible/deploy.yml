@@ -1,0 +1,107 @@
+---
+- hosts: webserver
+  vars:
+    ansible_host_key_checking: false
+  tasks:
+    # TODO switch to git repo
+    # - name: Copy website
+    #   become: yes
+    #   synchronize:
+    #     src: "{{ lookup('env', 'PWD') }}"
+    #     dest: "/var/www/{{ server_name }}"
+    #     rsync_opts:
+    #       - "--exclude=infrastructure"
+    #       - "--exclude=vendor"
+    #       - "--exclude=.env"
+
+    - name: Clone website from repo
+			git:
+				repo: git@github.com:johnnynotsolucky/craft-sandbox.git
+				dest: "/var/www/{{ server_name }}"
+				force: yes
+
+    - name: Set app owner/group
+      become: yes
+      file:
+        path: "/var/www/{{ server_name }}"
+        owner: www-data
+        group: www-data
+        recurse: yes
+
+    - name: Copy .env file
+      template:
+        src: .env.j2
+        dest: "/var/www/{{ server_name }}/.env"
+        owner: www-data
+        group: www-data
+        mode: 0774
+
+    - name: Set file permissions
+      become: yes
+      file:
+        path: "/var/www/{{ server_name }}/{{ item }}"
+        owner: www-data
+        group: www-data
+        mode: 0774
+      loop:
+        - .env
+        - composer.json
+        - composer.lock
+
+    - name: Ensure license file exists
+      stat:
+        path: "/var/www/{{ server_name }}/config/license.key"
+      register: license_stat
+
+    - name: Set license file permissions
+      become: yes
+      file:
+        path: /var/www/{{ server_name }}/config/license.key
+        mode: 0774
+      when: license_stat.stat.exists
+
+    - name: Set folder permissions
+      become: yes
+      file:
+        path: /var/www/{{ server_name }}/{{ item }}
+        owner: www-data
+        group: www-data
+        mode: 0775
+        recurse: yes
+      loop:
+        - storage
+        - vendor
+        - web/cpresources
+
+    - name: Install composer dependencies
+      composer:
+        command: install
+        working_dir: "/var/www/{{ server_name }}"
+
+    - name: Update vendor permissions
+      become: yes
+      file:
+        path: "/var/www/{{ server_name }}/vendor"
+        owner: www-data
+        group: www-data
+        mode: 0775
+        recurse: yes
+
+    - name: Install Craft
+      command: >
+        /var/www/{{ server_name }}/craft install/craft
+        --username \"{{ craft_default_username }}\"
+        --password \"{{ craft_default_password }}\"
+        --site-name \"{{ craft_site_name }}\"
+        --email \"{{ craft_admin_email }}\"
+        --interactive 0
+        --color 0
+			when: craft_install_craft_on_deploy|bool
+
+    - name: Migrate database
+      command: "/var/www/{{ server_name }}/craft migrate/all"
+      when: craft_migrate_on_deploy|bool
+
+    - name: Sync project config
+      command: "/var/www/{{ server_name }}/craft project-config/sync"
+      when: craft_sync_project_config_on_deploy|bool

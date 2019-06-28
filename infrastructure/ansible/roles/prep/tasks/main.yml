@@ -1,0 +1,12 @@
+---
+- name: Update all packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install "software-properties-common"
+  apt:
+    pkg:
+      - software-properties-common
+    state: present

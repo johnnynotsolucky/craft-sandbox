@@ -1,0 +1,24 @@
+---
+- name: 'Allow SSH'
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: 'Deny all ingress'
+  ufw:
+    policy: deny
+    direction: incoming
+
+- name: 'Allow all egress traffic'
+  ufw:
+    policy: allow
+    direction: outgoing
+
+- name: 'Allow NGiNX'
+  ufw:
+    rule: allow
+    name: 'Nginx Full'
+
+- name: 'Enable UFW'
+  ufw:
+    state: enabled

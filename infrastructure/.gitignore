@@ -1,0 +1,4 @@
+ansible/ansible.cfg
+terraform/.env
+terraform/**/.terraform
+terraform/**/terraform.tfstate.d
