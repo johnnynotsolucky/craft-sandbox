@@ -5,6 +5,7 @@ ${ANSIBLE_VAULT_PASSWORD}
 EOF
 
 cd ${TRAVIS_BUILD_DIR}
+echo ${TRAVIS_BUILD_DIR}
 
 ansible-playbook --private-key .deploy_key \
   -u website \
