@@ -30,6 +30,7 @@
         recurse: yes
 
     - name: Copy .env file
+      become: yes
       template:
         src: .env.j2
         dest: "/var/www/{{ server_name }}/.env"
