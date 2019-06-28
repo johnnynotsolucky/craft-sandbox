@@ -16,6 +16,6 @@ before_install:
   - sudo apt-get install jq -y
   - sudo apt-get install python3 -y
 install:
-  - pip install ansible
-  - pip install -r infrastructure/ansible/requirements.txt
+  - pip3 install ansible
+  - pip3 install -r infrastructure/ansible/requirements.txt
 script: "./deploy.sh"
