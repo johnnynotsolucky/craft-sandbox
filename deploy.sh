@@ -4,6 +4,8 @@ cat <<EOF > ./.ansible_vault_password
 ${ANSIBLE_VAULT_PASSWORD}
 EOF
 
+cd ${TRAVIS_BUILD_DIR}
+
 ansible-playbook --private-key .deploy_key \
   -u website \
   -i infrastructure/ansible/inventories/staging \
