@@ -26,6 +26,7 @@ before_install:
 
 install:
   - pip3 install ansible
+  - ansible -m setup localhost | grep ansible_python_version
   - ansible-galaxy install -r infrastructure/ansible/requirements.yml
 
 script: "./deploy.sh"
