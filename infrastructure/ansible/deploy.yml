@@ -18,6 +18,7 @@
       become: yes
       git:
         repo: git@github.com:johnnynotsolucky/craft-sandbox.git
+        accept_hostkey: yes
         dest: "/var/www/{{ server_name }}"
         force: yes
 
