@@ -3,24 +3,23 @@
   vars:
     ansible_host_key_checking: false
   tasks:
-    # TODO switch to git repo
-    # - name: Copy website
-    #   become: yes
-    #   synchronize:
-    #     src: "{{ lookup('env', 'PWD') }}"
-    #     dest: "/var/www/{{ server_name }}"
-    #     rsync_opts:
-    #       - "--exclude=infrastructure"
-    #       - "--exclude=vendor"
-    #       - "--exclude=.env"
-
-    - name: Clone website from repo
+    - name: Copy website
       become: yes
-      git:
-        repo: git@github.com:johnnynotsolucky/craft-sandbox.git
-        accept_hostkey: yes
+      synchronize:
+        src: "{{ lookup('env', 'PWD') }}"
         dest: "/var/www/{{ server_name }}"
-        force: yes
+        rsync_opts:
+          - "--exclude=infrastructure"
+          - "--exclude=vendor"
+          - "--exclude=.env"
+
+    # - name: Clone website from repo
+    #   become: yes
+    #   git:
+    #     repo: git@github.com:johnnynotsolucky/craft-sandbox.git
+    #     accept_hostkey: yes
+    #     dest: "/var/www/{{ server_name }}"
+    #     force: yes
 
     - name: Set app owner/group
       become: yes
