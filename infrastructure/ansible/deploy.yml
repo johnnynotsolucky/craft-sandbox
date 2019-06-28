@@ -15,6 +15,7 @@
     #       - "--exclude=.env"
 
     - name: Clone website from repo
+      become: yes
       git:
         repo: git@github.com:johnnynotsolucky/craft-sandbox.git
         dest: "/var/www/{{ server_name }}"
