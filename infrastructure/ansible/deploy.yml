@@ -6,7 +6,7 @@
     - name: Copy website
       become: yes
       synchronize:
-        src: "{{ lookup('env', 'PWD') }}"
+        src: "{{ lookup('env', 'PWD') }}/"
         dest: "/var/www/{{ server_name }}"
         rsync_opts:
           - "--exclude=infrastructure"
